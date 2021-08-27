@@ -25,3 +25,10 @@
 
 ```https://blog.sessionstack.com/how-javascript-works-proxy-and-reflect-11748452c695```
 
+#### Do Not Burn Your CPU Working With CSS Animations ####
+
+```https://betterprogramming.pub/do-not-burn-you-cpu-working-with-css-animations-e4d19069fb```
+
+#### Image Lazy Loading ####
+
+```https://github.com/aFarkas/lazysizes```
