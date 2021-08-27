@@ -12,3 +12,16 @@
 #### JS Memory optimisation ####
 
 ```http://buildnewgames.com/garbage-collector-friendly-code/```
+
+#### Functional Programming Principles in Javascript ####
+
+```https://www.freecodecamp.org/news/functional-programming-principles-in-javascript-1b8fc6c3563f/```
+
+#### Understanding Functional Programming in Javascript — A Complete Guide ####
+```https://levelup.gitconnected.com/understanding-functional-programming-in-javascript-a-complete-guide-e85ed13b42c8```
+
+
+#### Session Stack excellent articles for webcomponents, Service workers, design patterns  etc ####
+
+```https://blog.sessionstack.com/how-javascript-works-proxy-and-reflect-11748452c695```
+
