@@ -1,4 +1,4 @@
-### Awesome explanation of apply, call and bind in JavaScript with real life example ###
+# Awesome explanation of apply, call and bind in JavaScript with real life example #
 
 > After reading this article, if you haven't used apply, call and bind yet, you screwed my head off!
 
@@ -11,7 +11,7 @@ What we want to achieve in the end is:
     - Cats eat meat
     - Dogs eat fish
 
-#### Preface ####
+### Preface ###
 > First, prepare two objects: cat, dog:
 
 ```
@@ -32,7 +32,7 @@ let dog = {
 
 > After we are ready, let's implement the call first.
 
-#### call ####
+### call ###
 
 > If the dog eats fish, it needs to be used like this: cat.eatFish.call(dog), it can be seen that the call is called the method of eating fish on the cat, and the parameters are dog and fish, so it should be used like this:
 
@@ -93,7 +93,7 @@ cat.eatFish.defineCall(dog, "salmon", "tuna", "shark");
 
 > In this way, dog can eat all kinds of fish. Of course, it is also possible to use arguments to manipulate parameters.
 
-#### apply ####
+### apply ###
 > The usage of apply and call is similar. The difference is that the second parameter is an array, we can write it like this:
 
 ```
@@ -119,7 +119,7 @@ cat.eatFish.defineApply(dog, ["salmon", "tuna", "shark"]);// output:
 // 🐶 eat fish！what it eats：salmon,tuna,shark
 ```
 
-#### bind ####
+### bind ###
 > Now that call and apply have been implemented, the slightly more difficult bind can also be implemented. After all, they are friends. 
 
 > Let's first take a look at what bind has:
@@ -267,9 +267,9 @@ Function.prototype.defineBind = function (obj) {
 };
 ```
 
-> **Handwritten bind is complete!**
+***Handwritten bind is complete!***
 
-> **Finally, use a dog to eatFish to verify:**
+***Finally, use a dog to eatFish to verify:***
 
 ```
 let cat = {
