@@ -11,22 +11,22 @@ function Person(name, age, isDeveloper) {
     this.age = age;
     this.isDeveloper = isDeveloper || false;
 }
- 
+
 // Then we extend the prototype, this way we make JavaScript
 // point to this function when we call it on a Person
 Person.protype.writesCode = function() {
         console.log(this.isDeveloper ? 'this person writes code' : 'this person does not writes code')
     }
 }
- 
+
 // Create a person with: name = Ana, age = 32,
 // isDeveloper = true and a method writesCode
 let person1 = new Person('Ana', 32, true);
- 
+
 // Create a person with: name = Bob, age = 36,
 // isDeveloper = false and a method writesCode
 let person2 = new Person('Bob', 36);
- 
+
 // prints this person writes code
 person1.writesCode();
 // prints this person does not writes code
@@ -64,7 +64,7 @@ Using closures we can even create objects with public and private parts. This is
 let fruitsCollection = (() => {
     // private
     let objects = [];
- 
+
     // public
     return {
         addObject: (object) => {
@@ -79,16 +79,16 @@ let fruitsCollection = (() => {
         getObjects: () => JSON.parse(JSON.stringify(objects))
     };
 })(); // notice the execution
- 
+
 fruitsCollection.addObject("apple");
 fruitsCollection.addObject("orange");
 fruitsCollection.addObject("banana");
- 
+
 // prints: ["apple", "orange", "banana"]
 console.log(fruitsCollection.getObjects());
- 
+
 fruitsCollection.removeObject("apple");
- 
+
 // prints: ["orange", "banana"]
 console.log(fruitsCollection.getObjects());
 ```
@@ -107,20 +107,20 @@ Not everything is happiness, this pattern has some problems. When we want to cha
 let fruitsCollection = (() => {
     // private
     let objects = [];
- 
+
     const addObject = (object) => {
         object.push(object);
     }
- 
+
     const removeObject = (object) => {
         let index = objects.indexOf(object);
         if (index >= 0) {
             objects.splice(index, 1);
         }
     }
- 
+
     const getObjects = () => JSON.parse(JSON.stringify(objects))
- 
+
     // public
     return {
         addName: addObject,
@@ -128,16 +128,16 @@ let fruitsCollection = (() => {
         getNames: getObjects
     };
 })();
- 
+
 fruitsCollection.addName("Bob");
 fruitsCollection.addName("Alice");
 fruitsCollection.addName("Frank");
- 
+
 // prints: ["Bob", "Alice", "Frank"]
 console.log(namesCollection.getNames());
- 
+
 namesCollection.removeName("Alice");
- 
+
 // prints: ["Bob", "Frank"]
 console.log(namesCollection.getNames());
 ```
@@ -154,14 +154,14 @@ console.log(namesCollection.getNames());
 let configurationSingleton = (() => {
     // private value of the singleton initialized only once
     let config;
- 
+
     const initializeConfiguration = (values) => {
         this.randomNumber = Math.random();
         values = values || {};
         this.number = values.number || 5;
         this.size = values.size || 10;
     }
- 
+
     // We export the centralized method to return
     // the singleton's value
     return {
@@ -170,21 +170,21 @@ let configurationSingleton = (() => {
             if (config === undefined) {
                 config = new initializeConfiguration(values);
             }
- 
+
             // and always return the same value
             return config;
         }
     };
 })();
- 
+
 const configObject = configurationSingleton.getConfig({ "size": 8 });
 // prints number: 5, size: 8, randomNumber: someRandomDecimalValue
 console.log(configObject);
- 
+
 const configObject1 = configurationSingleton.getConfig({ "number": 8 });
 // prints number: 5, size: 8, randomNumber: same randomDecimalValue // como no primeiro config
 console.log(configObject1);
-``` 
+```
 
 ##### Observer Pattern #####
 > The observer pattern is very useful when we want to optimize the communication between separated parts of the system. It promotes an integration of the parts without making then too coupled.
@@ -194,12 +194,12 @@ The emitter will execute all the operations to which the observers are subscribe
 
 ```
 let publisherSubscriber = {};
- 
+
 // We pass an object to the container to manage subscriptions
 ((container) => {
     // the id represents a subscription to the topic
     let id = 0;
- 
+
     // the objects will subscribe to a topic by
     // sending a callback to be executed when
     // the event is fired
@@ -207,15 +207,15 @@ let publisherSubscriber = {};
         if (!(topic in container)) {
             container[topic] = [];
         }
- 
+
         container[topic].push({
             'id': ++id,
             'callback': f
         });
- 
+
         return id;
     }
- 
+
     // Every subscription has it's own id, we will
     // use it to remove the subscription
     container.unsubscribe = (topic, id) => {
@@ -237,7 +237,7 @@ let publisherSubscriber = {};
         }
     }
 })(publisherSubscriber);
- 
+
 let subscriptionID1 = publisherSubscriber.subscribe("mouseClicked", (data) => {
     console.log("mouseClicked, data: " + JSON.stringify(data));
 });
@@ -247,15 +247,15 @@ let subscriptionID2 = publisherSubscriber.subscribe("mouseHovered", function(dat
 let subscriptionID1 = publisherSubscriber.subscribe("mouseClicked", function(data) {
     console.log("second mouseClicked, data: " + JSON.stringify(data));
 });
- 
+
 // When we publish an event, all callbacks should
 // be called and you will see three logs
 publisherSubscriber.publish("mouseClicked", {"data": "data1"});
 publisherSubscriber.publish("mouseHovered", {"data": "data2"});
- 
+
 // We unsubscribe an event
 publisherSubscriber.unsubscribe("mouseClicked", subscriptionID3);
- 
+
 // now we have 2 logs
 publisherSubscriber.publish("mouseClicked", {"data": "data1"});
 publisherSubscriber.publish("mouseHovered", {"data": "data2"});
@@ -281,21 +281,21 @@ let personPrototype = {
 const Person = (name, age) => {
     let name = name || "John Doe";
     let age = age || 26;
- 
+
     const constructorFunction = (name, age) => {
         this.name = name;
         this.age = age;
     };
- 
+
     constructorFunction.prototype = personPrototype;
- 
+
     let instance = new constructorFunction(name, age);
     return instance;
 }
- 
+
 const person1 = Person();
 const person2 = Person("Jane Doe", 38);
- 
+
 // prints Hi, I am John Doe, and I have 26
 person1.sayHi();
 // prints Hi, I am Jane Doe, and I have 38
@@ -319,7 +319,7 @@ const invoker = {
         return x - y;
     }
 }
- 
+
 // the object to be used as abstraction layer when
 // we execute commands; it represents a interface
 // to the caller object
@@ -337,8 +337,108 @@ console.log(manager.execute("add", 3, 5));
 console.log(manager.execute("subtract", 5, 3));
 ```
 
-##### Facade Pattern ##### 
+##### Facade Pattern #####
 
 > The facade design pattern is used when we want to create an abstraction layer between what is show publicly and the internal implementation. It is used when we want to have a simpler interface.
-> This pattern is used, for example, on the DOM selectors of libraries as JQuery, Dojo and D3. These frameworks have powerful selectors that allow us to write complex queries on a very simple way. 
+> This pattern is used, for example, on the DOM selectors of libraries as JQuery, Dojo and D3. These frameworks have powerful selectors that allow us to write complex queries on a very simple way.
 > Something like jQuery(".parent .child div.span") seems simple, but it hides a complex query logic underneath.
+
+
+##### Strategy Pattern #####
+
+> Suppose you are currently working on an e-shop project. Every product has an original price, and we can call it originalPrice. But not all products are sold at their original price, and we may have promotions that allow items to be sold at a discount.
+```
+function getPrice(originalPrice, status) {
+  if (status === 'pre-sale') {
+    return originalPrice * 0.8
+  }
+
+  if (status === 'promotion') {
+    if (origialPrice <= 100) {
+      return origialPrice * 0.9
+    } else {
+      return originalPrice - 20
+    }
+  }
+  if (status === 'black-friday') {
+    if (origialPrice >= 100 && originalPrice < 200) {
+      return origialPrice - 20
+    } else if (originalPrice >= 200) {
+      return originalPrice - 50
+    } else {
+      return originalPrice * 0.8
+    }
+  }
+
+  if(status === 'default'){
+    return originalPrice
+  }
+}
+```
+> First, it violates the Single Responsibility Principle. The main function getPrice does too many things. This function is not easy to read and is also prone to bugs. If there is a bug in one condition, the entire function will be crushed. At the same time, such code is not easy to debug.
+> So how can we optimize this code? First, we can split this function to make getPrice less bloated.
+
+```
+function preSalePrice(origialPrice) {
+  return originalPrice * 0.8
+}
+
+function promotionPrice(origialPrice) {
+  if (origialPrice <= 100) {
+    return origialPrice * 0.9
+  } else {
+    return originalPrice - 20
+  }
+}
+
+function blackFridayPrice(origialPrice) {
+  if (origialPrice >= 100 && originalPrice < 200) {
+    return origialPrice - 20
+  } else if (originalPrice >= 200) {
+    return originalPrice - 50
+  } else {
+    return originalPrice * 0.8
+  }
+}
+
+function defaultPrice(origialPrice) {
+  return origialPrice
+}
+
+function getPrice(originalPrice, status) {
+  if (status === 'pre-sale') {
+    return preSalePrice(originalPrice)
+  }
+
+  if (status === 'promotion') {
+    return promotionPrice(originalPrice)
+  }
+
+  if (status === 'black-friday') {
+    return blackFridayPrice(originalPrice)
+  }
+
+  if(status === 'default'){
+    return defaultPrice(originalPrice)
+  }
+}
+```
+> After this modification, although the number of lines of code has increased, the readability has been significantly improved. Our main function is obviously not so bloated, and it is more convenient to write unit tests.
+
+> The above changes don’t solve the fundamental problem: our code is still full of if-else, and when we add or reduce discount rules, we still need to modify getPrice.
+> Keyword: mapping.
+> We could have used a map to store the mapping rather than a verbose if-else. Such as this:
+```
+let priceStrategies = {
+  'pre-sale': preSalePrice,
+  'promotion': promotionPrice,
+  'black-friday': blackFridayPrice,
+  'default': defaultPrice
+}
+```
+>We combine the status with the discount strategy. Then calculating the price will be very simple:
+```
+function getPrice(originalPrice, status) {
+  return priceStrategies[status](originalPrice)
+}
+```
